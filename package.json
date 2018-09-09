@@ -1,0 +1,30 @@
+{
+  "name": "meanauthapp",
+  "version": "1.0.0",
+  "description": "Mean stack front to back webapp with nodejs, mongodb, angular",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SurajitMalik/meanApp.git"
+  },
+  "author": "Surajit Malik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SurajitMalik/meanApp/issues"
+  },
+  "homepage": "https://github.com/SurajitMalik/meanApp#readme"
+}
