@@ -1,0 +1,32 @@
+<h2 class="page-header">Registration</h2>
+
+<form>
+  <div class="row">
+    <div class="form-group col-md-10">
+      <label for="">Username</label>
+      <input [(ngModel)]="userName" type="text" name="userName" id="" class="form-control" placeholder="Username">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="">First Name</label>
+      <input [(ngModel)]="firstName" type="text" name="firstName" id="" class="form-control" placeholder="First Name">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="">Last Name</label>
+      <input [(ngModel)]="lastName" type="text" name="lastName" id="" class="form-control" placeholder="Last Name">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="">Email</label>
+      <input [(ngModel)]="email" type="text" name="email" id="" class="form-control" placeholder="Email Address">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="">Password</label>
+      <input [(ngModel)]="password" type="text" name="password" id="" class="form-control" placeholder="Password">
+    </div>
+  </div>
+  <input type="button" (click)="onSubmit()" value="Submit" class="btn btn-primary btn-lg">
+  <input type="button" value="Reset" class="btn btn-secondary btn-lg">
+</form>

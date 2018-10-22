@@ -5,9 +5,10 @@ const
     jwt = require('jsonwebtoken');
 
 const
-    user = require('../models/user');
+    User = require('../models/user'),
+    config = require('../config/database');
 
-router.get('/register', (req, res, next) => {
+router.post('/register', (req, res, next) => {
     let newUser = new user({
         name: req.body.name,
         username: req.body.username,
@@ -15,14 +16,14 @@ router.get('/register', (req, res, next) => {
         password: req.body.password
     })
 
-    user.addUser(newUser, (err, res) => {
+    User.addUser(newUser, (err, user) => {
         if (err) {
-            res.json({
+            res.send({
                 success: false,
                 msg: 'REGISTRATION FAILED !'
             })
         } else {
-            res.json({
+            res.send({
                 success: true,
                 msg: 'SUCCESSFULLY REGISTERED'
             })
@@ -30,12 +31,54 @@ router.get('/register', (req, res, next) => {
     })
 })
 
-router.get('/authenticate', (req, res, next) => {
-    res.send('AUTHENTICATION ROUTE !');
+router.post('/authenticate', (req, res, next) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    User.getUserByName(username, (err, user) => {
+        if (err) throw err;
+        if (!user) {
+            return res.json({
+                success: false,
+                msg: 'User Not Found!'
+            })
+        }
+
+        User.checkPassword(password, user.password, (err, isMatch) => {
+            if (err) throw err;
+
+            if (isMatch) {
+                const token = jwt.sign(user.toJSON(), config.secret, {
+                    expiresIn: 3600 * 24 * 7
+                });
+
+                res.json({
+                    success: true,
+                    token: token,
+                    user: {
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        email: user.email
+                    }
+                })
+            } else {
+                return res.json({
+                    success: false,
+                    msg: 'Password Mismatch!'
+                })
+            }
+        })
+    })
+
 })
 
-router.get('/profile', (req, res, next) => {
-    res.send('PROFILE ROUTE !');
+router.get('/profile', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    res.json({
+        user: req.user
+    })
 })
 
 module.exports = router;
