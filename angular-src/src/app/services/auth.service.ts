@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
   private apiUrl = environment.apiUrl;
-  private authToken: any;
+  private authToken: string;
   private user: any;
 
   constructor(private http: Http) { }
@@ -24,8 +24,25 @@ export class AuthService {
     return header;
   }
 
-  register(user: any) {
-    this.http.post(`${this.apiUrl}/user/register`, user, { headers: this.setHeader() })
+  storeUserData(token: any, user: any) {
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('user', JSON.stringify(user));
+    this.authToken = token;
+    this.user = user;
+  }
+
+  register(user: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/user/register`, user, { headers: this.setHeader() })
+  }
+
+  authenticate(user: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/user/authenticate`, user, { headers: this.setHeader() })
+  }
+
+  logout() {
+    this.user = null;
+    this.authToken = "";
+    sessionStorage.clear();
   }
 
 }

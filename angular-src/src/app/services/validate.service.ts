@@ -8,6 +8,8 @@ export class ValidateService {
   validateRegister(user: any) {
     if (user.name === undefined || user.username === undefined || user.email === undefined) {
       return false;
+    } else {
+      return true;
     }
   }
 

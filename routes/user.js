@@ -9,7 +9,7 @@ const
     config = require('../config/database');
 
 router.post('/register', (req, res, next) => {
-    let newUser = new user({
+    let newUser = new User({
         name: req.body.name,
         username: req.body.username,
         email: req.body.email,
